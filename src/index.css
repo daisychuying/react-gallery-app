@@ -2,24 +2,35 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #3f4850;
+  background-color: #ffb347;
+}
+
+h1{
+  font-size: 3em;
+  font-family: Bradley Hand, cursive;
+  color: #e56717;
 }
 
 h2 {
   font-size: 2em;
+  font-family: Bradley Hand, cursive;
   margin: 52px 0 40px;
   text-transform: capitalize;
 }
 
 ul {
+  font-family: Bradley Hand, cursive;
   list-style-type: none;
   padding-left: 0;
 }
 
 a {
+  font-family: Bradley Hand, cursive;
   text-decoration: none;
 }
 
 .search-form {
+  font-family: Bradley Hand, cursive;
   max-width: 460px;
   display: flex;
   margin: 0 auto 32px;
@@ -27,7 +38,7 @@ a {
 
 .search-form button {
   outline: none;
-  background-color: #438bbd;
+  background-color: #e56717;
   border: none;
   padding: 0px 15px;
   border-radius: 0 0.35em 0.35em 0;
@@ -35,6 +46,7 @@ a {
 }
 
 input {
+  font-family: Bradley Hand, cursive;
   font-size: 1em;
   width: 100%;
   background-color: #edeff0;
@@ -52,16 +64,16 @@ input {
 
 .main-nav a {
   display: block;
-  background: #438bbd;
+  background: #e56717;
   border-radius: 3px;
   padding: 5px;
-  color: #fff;
+  color: #f5deb3;
 }
 
 .main-nav .active,
 .main-nav a:hover,
 .search-form button:hover {
-  background-color: #275270;
+  background-color: #c35817;
 }
 
 .photo-container ul {

@@ -7,6 +7,7 @@ import Nav from './Components/Nav';
 import NotFound from './Components/NotFound';
 import PhotoList from './Components/PhotoList';
 
+
 import apiKey from './config';
 import './index.css';
 
@@ -59,7 +60,6 @@ export default class App extends Component {
               // query: query
             });
           }
-          console.log(this.state.search);
         })
         //load error message if there exists
         .catch(error => {
@@ -89,7 +89,7 @@ export default class App extends Component {
                 <Route exact path="/cats" render={ () => <PhotoList data={ this.state.cats } loading={ this.state.loading } alt= 'cats' /> } />
                 <Route exact path="/lajolla" render={ () => <PhotoList data={ this.state.lajolla } loading={ this.state.loading }/> } />
                 <Route exact path="/sunset" render={ () => <PhotoList data={ this.state.sunset } loading={ this.state.loading }/> } />
-                
+
                 <Route component={NotFound} />
               </Switch>
               }
