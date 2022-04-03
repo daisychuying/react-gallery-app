@@ -14,65 +14,25 @@ export default class App extends Component {
   
     constructor() {
       super();
+      this.textInput = React.createRef();
       this.state = {
         cats: [],
-        dogs: [],
-        computers: [],
+        lajolla: [],
+        sunset: [],
         search: [],
-        loading: true
+        loading: true,
       };
     } 
-  
-    // componentDidMount(){
-    //   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=cats&per_page=24&format=json&nojsoncallback=1`)
-    //     .then(response => {
-    //         this.setState({
-    //           cats: response.data.photos.photo,
-    //           loading: false
-    //         });
-    //   })
-    //   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=dogs&per_page=24&format=json&nojsoncallback=1`)
-    //     .then(response => {
-    //         this.setState({
-    //           dogs: response.data.photos.photo,
-    //           loading: false
-    //         });
-    //   });
-    //   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=computers&per_page=24&format=json&nojsoncallback=1`)
-    //     .then(response => {
-    //         this.setState({
-    //           computers: response.data.photos.photo,
-    //           loading: false
-    //         });
-    //   });
-    // }
 
-    // performSearch = (query) => {
-    //   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-    //       this.setState({
-    //         search: response.data.photos.photo,
-    //         loading: false
-    //       });
-    //     })
-    //     .catch(error => {
-    //       console.log('Error fetching and parsing data', error);
-    //     });    
-    // }
-
+    //trigger searchFunction after the component has been mounted
     componentDidMount() {
       this.searchFunction('cats');
-      this.searchFunction('dogs');
-      this.searchFunction('computers');
-    }
-
-    componentWillUnmount(){
-      clearInterval(this.state.cats);
-      clearInterval(this.state.dogs);
-      clearInterval(this.state.computers);
-      clearInterval(this.state.search);
+      this.searchFunction('La Jolla');
+      this.searchFunction('sunset');
+      this.searchFunction();
     }
     
-    
+    //This method fetch the data from fliker api and use response to set the state of photos
     searchFunction = (query) => {
       this.setState({loading : true});
       axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&text=${query}&per_page=24&format=json&nojsoncallback=1`)
@@ -82,23 +42,26 @@ export default class App extends Component {
               cats: response.data.photos.photo,
               loading: false
             });
-          } else if (query === 'dogs') {
+          } else if (query === 'La Jolla') {
             this.setState({
-              dogs: response.data.photos.photo,
+              lajolla: response.data.photos.photo,
               loading: false
             });
-          } else if (query === 'computers') {
+          } else if (query === 'sunset') {
             this.setState({
-              computers: response.data.photos.photo,
+              sunset: response.data.photos.photo,
               loading: false
             });
           } else {
             this.setState({
               search: response.data.photos.photo,
-              loading: false
+              loading: false,
+              // query: query
             });
           }
+          console.log(this.state.search);
         })
+        //load error message if there exists
         .catch(error => {
           console.log('Error fetching and parsing data', error);
         });    
@@ -106,20 +69,27 @@ export default class App extends Component {
 
     render() { 
       return (
+        //A <Router> that uses the HTML5 history API (pushState, replaceState and the popstate event) to keep your UI in sync with the URL.
           <BrowserRouter>
               <div className='container'>
+              <h1>Daisy's Photo Gallery</h1>
               <SearchForm onSearch={this.searchFunction} />
               <Nav />
               {
                 (this.state.loading)
                 ? <p className="loading"> Loading... </p>  
                 :
+              //<Switch /> component will only render the first route that matches/includes the path.
+              //Redirect to cat route in home page
+
               <Switch>
+                <Route path="/search/:query" render={ () => <PhotoList data={ this.state.search } loading={ this.state.loading }/> } />
+              
                 <Route exact path="/" render={ () => <Redirect to='/cats' /> } />
                 <Route exact path="/cats" render={ () => <PhotoList data={ this.state.cats } loading={ this.state.loading } alt= 'cats' /> } />
-                <Route exact path="/dogs" render={ () => <PhotoList data={ this.state.dogs } loading={ this.state.loading }/> } />
-                <Route exact path="/computers" render={ () => <PhotoList data={ this.state.computers } loading={ this.state.loading }/> } />
-                <Route exact path="/:search" render={ () => <PhotoList data={ this.state.search } loading={ this.state.loading }/> } />
+                <Route exact path="/lajolla" render={ () => <PhotoList data={ this.state.lajolla } loading={ this.state.loading }/> } />
+                <Route exact path="/sunset" render={ () => <PhotoList data={ this.state.sunset } loading={ this.state.loading }/> } />
+                
                 <Route component={NotFound} />
               </Switch>
               }

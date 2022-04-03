@@ -2,10 +2,9 @@ import React from 'react';
 import Photo from './Photo';
 import NotFound from './NotFound';
 
+//render the gallery content
 const PhotoList = props => { 
     const results = props.data;
-    console.log(props);
-    console.log(props.data);
     let photos;
     if ( results.length > 0 ) {
         photos = results.map(photo => 
@@ -18,13 +17,13 @@ const PhotoList = props => {
         photos = <NotFound />
     };
     return(
-        <div className="photo-container">
-            <h2> Picture </h2>
-            {this.props.loading? <p>Loading..</p> : 
-            <ul>
-                {photos}
-            </ul>}
-        </div>
+            
+            <div className= "photo-container">
+                <ul className="photo-container">
+                    {photos}
+                </ul>
+            </div>
+        
       );
   }
 
